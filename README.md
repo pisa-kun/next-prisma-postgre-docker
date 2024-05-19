@@ -108,10 +108,26 @@ appコンテナの中に入って、npm run devを実行する。
 > docker exec -it next-prisma-postgre-pnpm-docker sh 
 > pnpm run dev
 
-> pnpm add drizzle-orm pg
+### prismaのセットアップ
+> pnpm add prisma ts-node --save-dev
 
-> pnpm add -D @types/pg drizzle-kit typescript ts-node
+prismaの初期化
+> pnpm dlx prsima init
 
-tsconfig.jsonを作成
+初期化コマンドを実行すると
+prismaフォルダと、.envに情報が追加される。
+.envのDATABASE_URLは.envの元の情報をもとに書き換えること。
 
-### コーディング
+> DATABASE_URL="postgresql://admin:password@db:5432/mydb?schema=public"
+
+docker起動
+> docker compose down
+> docker compose up --build
+
+DBにデータを書き込む
+> npx prisma db push
+> pnpm dlx prisma db push
+
+→ schema.prisma をもとに dbを更新する。（migration ファイルを生成せずに)
+
+5555にアクセスできない・・・

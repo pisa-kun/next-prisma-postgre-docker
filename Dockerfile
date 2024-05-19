@@ -9,5 +9,6 @@ RUN apk add --no-cache git
 RUN npm install -g npm@9.7.2
 RUN npm install -g node-gyp
 RUN npm install -g pnpm
+# RUN npm install prisma ts-node --save-dev
 RUN npm upgrade --save --legacy-peer-deps
 RUN npm install
