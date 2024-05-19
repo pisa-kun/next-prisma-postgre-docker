@@ -30,6 +30,9 @@ nextjsをlocalhost3000で立ち上げする
 ### PostgreSQLのコンテナを定義
 docker-compose.ymlをプロジェクトルートに作成して記載。
 参照元の記事だと **volumes: db_data:**の記載がなくdocker compose upでエラーになる。
+
+[参考](https://qiita.com/friedaji/items/c1894821a2c49395cfd7)
+
 ```yml
 volumes:
   db_data:
@@ -70,6 +73,40 @@ DB_PASS=password
 
 プロジェクト直下でdocker compose upを実行してdbのコンテナを立ち上げる。
 > docker compose up
+
+#### tablePlusで接続確認
+以下のパラメータを設定
+- User : admin
+- Password : password
+- database : mydb
+
+### コンテナにNode環境を作成
+
+ルートディレクトにDockerfileを作成
+
+pnpmをインストールすること
+```Dockerfile
+FROM node:18-alpine
+
+RUN apk add g++ make py3-pip
+
+WORKDIR /app/
+
+COPY ./ /app/
+RUN apk add --no-cache git
+RUN npm install -g npm@9.7.2
+RUN npm install -g node-gyp
+RUN npm install -g pnpm
+RUN npm upgrade --save --legacy-peer-deps
+RUN npm install
+```
+
+docker起動
+> docker compose up --build
+
+appコンテナの中に入って、npm run devを実行する。
+> docker exec -it next-prisma-postgre-pnpm-docker sh 
+> pnpm run dev
 
 > pnpm add drizzle-orm pg
 
