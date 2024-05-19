@@ -39,7 +39,7 @@ services:
    image: postgres:15
    hostname: db
    env_file:
-     - ./.postgre.env
+     - ./.env
    networks:
      - app_network
    environment:
@@ -60,6 +60,7 @@ networks:
 ```
 
 設定ファイルもプロジェクト直下に作成する。
+設定ファイル名は**.env**の名前にする必要がある。.db.envとかにすると設定を読み込めない。
 ```env
 DB_HOST=db
 DB_NAME=mydb
